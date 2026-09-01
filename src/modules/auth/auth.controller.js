@@ -28,3 +28,23 @@ export const confirmEmail = async(req,res)=>{
         return res.status(200).json({message:"success"})
 
 }
+export const login = async (req,res)=>{
+const {email,password} = req.body
+const user = await userModel.findOne({email})
+if(!user){
+    return res.status(400).json({message:"invalid data"})
+}
+if(!user.confirmEmail){
+    return res.status(400).json({message:"plz confirm your email"})
+}
+if(user.status=="not_active"){
+    return res.status(400).json({message:"yoir account is blocked "})
+}
+const match = await bcrypt.compare(password,user.password)
+if(!match){
+        return res.status(400).json({message:"invalid data"})
+}
+const token = jwt.sign({id:user._id,userName:user.userName,role:user.role},process.env.LOGIN_SIQNAL)
+
+    return res.status(200).json({message:"success",token})
+}
