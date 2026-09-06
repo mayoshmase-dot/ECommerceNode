@@ -1,7 +1,7 @@
 import mongoose,{ model,Schema, Types} from "mongoose";
 
 const categorySchema = new Schema({
-name:{type:String,required:true,min:3,max:50},
+name:{type:String,required:true , unique:true,min:3,max:50},
 slug:{type:String,required:true},
 status:{type:String,enum:["active","not_active"], default:'active'},
 image:{type:Object},
