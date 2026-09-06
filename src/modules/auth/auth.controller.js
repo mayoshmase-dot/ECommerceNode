@@ -12,7 +12,7 @@ if(user){
 }
 const hashPassword = bcrypt.hashSync(password,parseInt(process.env.SALT_Round))
 const creatUser = await userModel.create({userName,email,password:hashPassword})
-const token = jwt.sign({email},process.env.CONFIRMEMAILSIQNAL)
+const token = jwt.sign({email},process.env.CONFIRMEMAILSIGNAL)
 const html = `
 <div>
 <h1></h1>
@@ -25,7 +25,7 @@ await sendEmail(email , "Confirm Email" , html)
 }
 export const confirmEmail = async(req,res)=>{
     const {token} = req.params
-    const decoded = jwt.verify(token,process.env.CONFIRMEMAILSIQNAL)
+    const decoded = jwt.verify(token,process.env.CONFIRMEMAILSIGNAL)
     await userModel.findOneAndUpdate({email:decoded.email},{confirmEmail:true})
         return res.status(200).json({message:"success"})
 
@@ -46,7 +46,7 @@ const match = await bcrypt.compare(password,user.password)
 if(!match){
         return res.status(400).json({message:"invalid data"})
 }
-const token = jwt.sign({id:user._id,userName:user.userName,role:user.role},process.env.LOGIN_SIQNAL)
+const token = jwt.sign({id:user._id,userName:user.userName,role:user.role},process.env.LOGIN_SIGNAL)
 
     return res.status(200).json({message:"success",token})
 }

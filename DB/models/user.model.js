@@ -10,7 +10,7 @@ address:{type:String},
 confirmEmail:{type:Boolean,default:false},
 gender:{type:String,enum:["male","female"]},
 status:{type:String,enum:["active","not_active"]},
-role:{type:String,default:'user',enum:["admin","user"]},
+role:{type:String,default:'user',enum:["admin","user"] , default:'user'},
 sendCode:{type:String,default:null}
 
 },{
