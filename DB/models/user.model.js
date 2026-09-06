@@ -11,6 +11,7 @@ confirmEmail:{type:Boolean,default:false},
 gender:{type:String,enum:["male","female"]},
 status:{type:String,enum:["active","not_active"]},
 role:{type:String,default:'user',enum:["admin","user"]},
+sendCode:{type:String,default:null}
 
 },{
     timestamps:true

@@ -1,8 +1,11 @@
+import 'dotenv/config'
+
 import dns from 'node:dns'
 dns.setServers(['8.8.8.8', '8.8.4.4'])
+
 import express from 'express'
-import 'dotenv/config'
 import initApp from './src/index.router.js'
+
 const app = express()
 const PORT = process.env.PORT || 3000
 
