@@ -17,3 +17,12 @@ export const getActive = async (req,res)=>{
     const categories = await categoryModel.find({status:'active'})
 return res.status(200).json({message:"success", categories})
 }
+export const remove = async (req,res)=>{
+    const {id} = req.params
+    const categories = await categoryModel.findByIdAndDelete(id)
+if(!categories){
+ return res.status(404).json({message:"category not found"})
+}
+return res.status(200).json({message:"success"})
+
+}
