@@ -59,16 +59,36 @@ export const get = async (req, res) => {
 
     const products = await productModel.find({})
 
-    return res.status(200).json({message: "success", products })
+    return res.status(200).json({ message: "success", products })
 }
 export const getActive = async (req, res) => {
 
-    const products = await productModel.find({status:"active"}).select('-discount')
+    const products = await productModel.find({ status: "active" }).select('-discount')
 
-    return res.status(200).json({message: "success", products })
+    return res.status(200).json({ message: "success", products })
 }
 export const getDetails = async (req, res) => {
-const {id} = req.params
+    const { id } = req.params
     const products = await productModel.findById(id)
-    return res.status(200).json({message: "success", products })
+    return res.status(200).json({ message: "success", products })
 }
+export const remove = async (req, res) => {
+    const { id } = req.params;
+
+    const product = await productModel.findById(id);
+
+    if (!product) {
+        return res.status(404).json({
+            message: "Product not found"
+        });
+    }
+
+    await cloudinary.uploader.destroy(product.mainImage.public_id);
+
+    await productModel.findByIdAndDelete(id);
+
+    return res.status(200).json({
+        message: "Deleted successfully"
+    });
+};
+
