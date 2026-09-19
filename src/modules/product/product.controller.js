@@ -55,3 +55,20 @@ export const create = async (req, res) => {
         product
     })
 }
+export const get = async (req, res) => {
+
+    const products = await productModel.find({})
+
+    return res.status(200).json({message: "success", products })
+}
+export const getActive = async (req, res) => {
+
+    const products = await productModel.find({status:"active"}).select('-discount')
+
+    return res.status(200).json({message: "success", products })
+}
+export const getDetails = async (req, res) => {
+const {id} = req.params
+    const products = await productModel.findById(id)
+    return res.status(200).json({message: "success", products })
+}
